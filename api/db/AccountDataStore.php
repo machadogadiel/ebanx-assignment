@@ -43,8 +43,12 @@ class AccountDataStore
      * @param string $id Account ID
      * @return int|null Balance if account exists, null otherwise
      */
-    public static function getAccountById(string $id): ?int
+    public static function getAccountById(?int $id): ?int
     {
+        if (is_null($id)) {
+            return null;
+        }
+
         return self::$accounts[$id] ?? null;
     }
 }
