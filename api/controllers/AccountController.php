@@ -1,8 +1,10 @@
 <?php
 
+
 namespace Api\controllers;
 
 use Api\db\AccountDataStore;
+use Api\utils\ControllerUtils;
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 
@@ -33,17 +35,16 @@ class AccountController
             return $response->withStatus(404);
         }
 
-        $response->getBody()->write(json_encode($account->getBalance()));
-
-        return $response
-            ->withHeader("Content-Type", "application/json")
-            ->withStatus(200);
+        return ControllerUtils::jsonResponse($response, $account->getBalance())
     }
+
     public function handleEvent(
         Request $request,
         Response $response,
         mixed $args
-    ): void {}
+    ): Response {
+
+    }
 }
 
 ?>
