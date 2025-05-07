@@ -8,13 +8,13 @@ class AccountModel
     private $id;
     private $balance;
 
-    public function __construct(int $id, int $balance)
+    public function __construct(string $id, int $balance)
     {
         $this->id = $id;
         $this->balance = $balance ?? 0;
     }
 
-    public function getId(): int
+    public function getId(): string
     {
         return $this->id;
     }
@@ -26,23 +26,30 @@ class AccountModel
 
     public function withdraw(int $amount): int
     {
-        return $this->balance -= $amount;
+        $this->balance -= $amount;
+
+        return $this->balance;
     }
 
     public function deposit(int $amount): int
     {
-        return $this->balance += $amount;
+        $this->balance += $amount;
+
+        return $this->balance;
     }
 
-    public function transferTo(int $destinationAccountId, int $amount): ?int
-    {
+    public function transferTo(
+        string $destinationAccountId,
+        int $amount
+    ): ?array {
         $destAccount = DataStore::getAccountById($destinationAccountId);
 
         if ($destAccount) {
             // take from away from current account
-            $this->withdraw($amount);
+            $withdrawnAmount = $this->withdraw($amount);
             // add to destination
-            $destAccount->deposit($amount);
+            $destAccount->deposit($withdrawnAmount);
+
             return [$this, $destAccount];
         }
 
