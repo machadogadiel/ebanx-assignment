@@ -27,7 +27,7 @@ Here are some initial decisions I made before starting the project, and my ratio
 
 ## How to get started
 
-You will to have PHP and composer installed.
+You will need to have PHP (latest) and composer installed.
 
 - Clone the project
 - Install the dependencies: `composer install`;
